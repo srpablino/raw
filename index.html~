@@ -94,9 +94,7 @@
   <script type="text/javascript" src="bower_components/FileSaver/FileSaver.js"></script>
   <!-- zeroclipboard -->
   <script type="text/javascript" src="bower_components/zeroclipboard/ZeroClipboard.min.js"></script>
-  <!-- tip para el d3 -->
-  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-  
+
   <!-- raw -->
   <script type="text/javascript" src="lib/raw.js"></script>
 
@@ -118,7 +116,6 @@
   <script src="charts/smallMultiplesArea.js"></script>
   <script src="charts/bumpChart.js"></script>
   <script src="charts/new_chart.js"></script>
-  <script src="charts/sunburst_zoomable.js"></script>	
 
   <!-- angular -->
   <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
@@ -128,8 +125,7 @@
   <script type="text/javascript" src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui/build/angular-ui.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
-		
-  
+
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
