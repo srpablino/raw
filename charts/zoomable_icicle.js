@@ -80,7 +80,7 @@
 	var partition = d3.layout.partition()
 		.value(function(d) { return d.size; });
 		
-	var rect;
+	var rect,texto;
 	
 	var tip= d3.tip()
 		.attr('class', 'd3-tip')
@@ -109,15 +109,16 @@
 		var resultado = Math.round(flotante*100)/100;
 		return resultado;
 	}
-	
+	var nodes;
 	chart.draw(function (selection, data){
 		svg=selection;
 		svg=svg.attr("width", width)
 			.attr("height", height)
 			.append("g")
 		svg.call(tip);
+	   nodes = partition.nodes(data);
 		rect = svg.selectAll("rect")
-			.data(partition.nodes(data))
+			.data(nodes)
 			.enter().append("rect")
 				.attr("x", function(d) { return x(d.x); })
 				.attr("y", function(d) { return y(d.y); })
@@ -127,7 +128,18 @@
 				.style("fill", function(d) { /*return color((d.children ? d : d.parent).name);*/ return color(d.name); })
 				.on("mouseover",function(d){tip.show(d);mouseover(d);})
 				.on("mouseout", function(d){tip.hide(d);mouseleave(d)})//tip.hide)
-				.on("click", click);
+				.on("click", click)
+		texto=svg.selectAll("text").data(nodes)
+			.enter().append("svg:text")
+				.attr("x", function(d) { return x(d.x) + x(d.dx/2) ; })
+				.attr("y", function(d) { return y(d.y) + y(d.dy/2) ; })
+				.attr("dy", ".35em")
+				.attr("text-anchor", "middle")
+				.style("font-size","11px")
+				.style("font-family","Arial, Helvetica")
+				.text(function(d) { var cadena= d.dx >= 0.25 ? d.name : "";return cadena});
+		
+				
 	});
 	function mouseover(d){
 		svg.selectAll("path")
@@ -160,13 +172,33 @@
 	function click(d) {
 	  x.domain([d.x, d.x + d.dx]);
 	  y.domain([d.y, 1]).range([d.y ? 20 : 0, height]);
-
+	  var nameFiltro = d.name;
 	  rect.transition()
 		  .duration(750)
 		  .attr("x", function(d) { return x(d.x); })
 		  .attr("y", function(d) { return y(d.y); })
-		  .attr("width", function(d) { var w=x(d.x + d.dx) - x(d.x); console.log("width: "+w);return w  })
-		  .attr("height", function(d) { var h=y(d.y + d.dy) - y(d.y); console.log("height: "+h);return h  });
+		  .attr("width", function(d) { var w=x(d.x + d.dx) - x(d.x); return w  })
+		  .attr("height", function(d) { var h=y(d.y + d.dy) - y(d.y); return h  });
+	//hace volar todo el texto, deja en blanco el grafico
+	texto.transition()
+				.attr("x", function(d) { 9000 ; })
+				.attr("y", function(d) { 9000 ; })
+				.attr("dy", ".35em")
+				.attr("text-anchor", "middle")
+				.style("font-size","11px")
+				.style("font-family","Arial, Helvetica")
+				.text(function(d) { return d.name });				  
+    //reinserta texto, pero solo aquellos que cumplan condicion de filtro				
+	var max = (d.dx)/4;	  
+	texto.data(nodes.filter(function(d){return d.dx >= max}))
+				.transition()
+				.attr("x", function(d) { return x(d.x + d.dx/2) ; })
+				.attr("y", function(d) { return y(d.y + d.dy/2) ; })
+				.attr("dy", ".35em")
+				.attr("text-anchor", "middle")
+				.style("font-size","11px")
+				.style("font-family","Arial, Helvetica")
+				.text(function(d) { return d.name });				  
 }
 	
 })();
