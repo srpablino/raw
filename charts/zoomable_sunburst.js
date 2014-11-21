@@ -156,7 +156,8 @@
 				
 				texto.append("textPath")
 					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? d.name: ""; })
+				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? d.name: ""; })
+				    
 			  
 	});
 	
@@ -198,7 +199,7 @@
 		path.transition()
 			.duration(750)
 			.attrTween("d", arcTween(d))
-		texto.selectAll("text").style("opacity",1);
+		texto.style("opacity",1);
 		
 		console.log("valor "+d.class.split(" --> ")[dp])
 		
@@ -209,7 +210,11 @@
 				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? d.name: ""; })
 		*/
 		
-		texto.style("opacity",function(d){console.log("split "+d.class.split(" --> ")[dp] +" parent "+ parent.name);return d.class.split(" --> ")[dp] == parent.name & x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? 1 : 0});
+		
+		
+		texto.style("opacity",function(d){return parent.parent ? 
+														(d.class.split(" --> ")[dp] == parent.name & x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? 1 : 0)
+														: x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? 1 : 0 })
 		
 		/*
 		texto=g.append("text")
