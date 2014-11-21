@@ -32,7 +32,7 @@ angular.module('raw.controllers', [])
     $scope.error = false;
     $scope.loading = true;
 	//'Correlations', 'Distributions', 'Time Series',
-    $scope.categories = [ 'Hierarchies', 'Zoomable','Others'];
+    $scope.categories = [ 'Zoomable','Others'];
 
     $scope.parse = function(text){
 
