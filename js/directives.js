@@ -306,8 +306,8 @@ angular.module('raw.directives', [])
 				function message(){
 					var hasInvalidType = values().filter(function (d){ return !isValidType(d); }).length > 0;
 					scope.messageText = hasInvalidType
-						? "You should only use " + scope.types.map(function (d){ return d.name.toLowerCase() + "s"; }).join(" or ") + " here"
-						: "Drag " + scope.types.map(function (d){ return d.name.toLowerCase() + "s"; }).join(", ") + " here";
+						? "Solo debe utilizar " + scope.types.map(function (d){ return d.name.toLowerCase() + "s"; }).join(" o ") + " aqui"
+						: "Arrastre " + scope.types.map(function (d){ return d.name.toLowerCase() + "s"; }).join(", ") + " aqui";
 					//element.parent().find('.msg').html(messageText);
 				}
 
@@ -492,10 +492,10 @@ angular.module('raw.directives', [])
       replace:true,
       template :  '<div class="row">' +
                     '<form class="form-search col-lg-12">' +
-                      '<button bs-select class="btn btn-default" placeholder="Choose type" ng-model="mode" ng-options="m.label for m in modes">' +
+                      '<button bs-select class="btn btn-default" placeholder="Elija un tipo" ng-model="mode" ng-options="m.label for m in modes">' +
                       'Select <span class="caret"></span>' +
                       '</button>' +
-                      '<input class="form-control col-lg-12" placeholder="Filename" type="text" ng-model="filename">' +
+                      '<input class="form-control col-lg-12" placeholder="Nombre del archivo" type="text" ng-model="filename">' +
                       '<button class="btn btn-success form-control" ng-class="{disabled:!mode.label}" ng-click="mode.download()">Download</button>' +
                     '</form>' +
                   '</div>',
@@ -588,9 +588,9 @@ angular.module('raw.directives', [])
       }
 
       scope.modes = [
-    		{ label : 'Vector graphics (svg)', download : downloadSvg },
-    		{ label : 'Image (png)', download : downloadPng },
-    		{ label : 'Data model (json)', download : downloadData }
+    		{ label : 'Gráfico Vector (svg)', download : downloadSvg },
+    		{ label : 'Imagen (png)', download : downloadPng },
+    		{ label : 'Modelo de dato (json)', download : downloadData }
     	]
     	//scope.mode = scope.modes[0]
 

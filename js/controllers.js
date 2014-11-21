@@ -7,9 +7,9 @@ angular.module('raw.controllers', [])
   .controller('RawCtrl', function ($scope, dataService) {
 
     $scope.samples = [
-      { title : 'Cars (multivariate)', url : 'data/multivariate.csv' },
-      { title : 'Movies (dispersions)', url : 'data/dispersions.csv' },
-      { title : 'Music (flows)', url : 'data/flows.csv' },
+      { title : 'Autos (multivariate)', url : 'data/multivariate.csv' },
+      { title : 'Peliculas (dispersions)', url : 'data/dispersions.csv' },
+      { title : 'Musica (flows)', url : 'data/flows.csv' },
       { title : 'Cocktails (correlations)', url : 'data/correlations.csv' }
     ]
 
@@ -31,8 +31,8 @@ angular.module('raw.controllers', [])
     $scope.metadata = [];
     $scope.error = false;
     $scope.loading = true;
-
-    $scope.categories = ['Correlations', 'Distributions', 'Time Series', 'Hierarchies', 'Zoomable','Others'];
+	//'Correlations', 'Distributions', 'Time Series',
+    $scope.categories = [ 'Hierarchies', 'Zoomable','Others'];
 
     $scope.parse = function(text){
 
@@ -92,7 +92,7 @@ angular.module('raw.controllers', [])
     $scope.codeMirrorOptions = {
       lineNumbers : true,
       lineWrapping : true,
-      placeholder : 'Paste your text or drop a file here. No data on hand? Try one of our sample datasets!'
+      placeholder : 'Haga un copiar/pegar de los datos o suelte un archivo aqui. Si no cuenta con algún dataset pruebe utilizar los datasets de muestra! Click más arriba'
     }
 
     $scope.selectChart = function(chart){

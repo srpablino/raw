@@ -41,8 +41,7 @@
 				<tbody>
 					<tr>
 						<td align="center"><a class="navbar-brand" href="/#"
-							style="width: 100%">Visualizador de<br>
-							<br></a></td>
+							style="width: 100%">Visualizador de<br> <br></a></td>
 						<td></td>
 					</tr>
 
@@ -52,8 +51,7 @@
 						<td><div class="collapse navbar-collapse navbar-right"
 								id="raw-navbar">
 								<ul class="nav navbar-nav">
-									<li><a href="./acerca_de.html" target="./acerca_de.html">Acerca
-											de</a></li>
+									<li><a href="#">Acerca de</a></li>
 									<li><a
 										href="https://github.com/densitydesign/raw/wiki/Developer-Guide">Guía
 											del Desarrollador</a></li>
@@ -71,16 +69,81 @@
 
 		</div>
 
+
+		</div>
 	</nav>
 
-	<div ng-view class="wrap"></div>
+	<div style="clear: both;"></div>
+	<table id="tablaContenedor" width="1000px" border="0" align="center"
+		cellpadding="50px" cellspacing="0">
+		<tr>
+			<td>
+				<h1 class="page-heading">Acerca de</h1> <!-- Snippet home/snippets/about_text.html start -->
+				<h2>
+					¿De qué se trata el<a href="http://opendata.pol.una.py/">
+						Visualizador de Datos Abiertos</a> ?
+				</h2>
+				<p>
+					Los datasets son conjuntos de datos. Estos generalmente están
+					represetados en formatos de tabla o en formatos de hojas de
+					cálculos, PDF, CSV. Cuando observamos estos datasets vemos un
+					conjunto de letras y números agrupos los cuales deben ser
+					analizados detalladamente para poder inferir conclusiones. Para
+					ayudar a este proceso, las visualizaciones son un medio rápido y
+					sencillo para mostrar la informacion que se encuentran en los
+					datasets. La herramienta VIDA (Visualizador de Datos Abiertos)
+					permite generar visualizaciones dinámicas a partir de datos en
+					formato CSV. Para mayor información puede ingresar al <a
+						href="https://github.com/densitydesign/raw/wiki/FAQs">FAQ</a> del
+					proyecto RAW.
+				<h2>¿Cómo puedo usar el Visualizador de Datos Abiertos?</h2>
+				<p>
+					La utilización de la herramienta VIDA consiste en generar
+					visualizaciones preestablecidas a partir de datos en formato CSV.
+					Ver <a href="https://github.com/densitydesign/raw/wiki/FAQs">FAQs</a> para más información.
+				</p>
+
+
+
+				<h2>¿Quiénes están involucrados en el proyecto?</h2>
+				<p>El proyecto VIDA (Visualizador de Datos Abiertos)involucra a
+					estudiantes de la Facultad Politécnica Universidad Nacional de
+					Asunción (FP-UNA), Paraguay. Esta herramienta fue realizada en
+					concepto del trabajo práctico final de la cátedra de Datos Abiertos
+					de la Carrera Ingeniería Informática.</p>
+
+				<h2>¿Quién es parte del equipo técnico?</h2>
+				<p>
+					El código fuente de este portal de datos abiertos se encuentra
+					disponible en Github <a href="https://github.com/srpablino/raw">aquí</a>.
+				</p>
+				<p>Los alumnos autores de este trabajo son: Jesús Romero
+					(jromero@pol.una.py) y Pablo López (pjlopez@pol.una.py), ambos
+					estudiantes del 10mo. semestre de la carrera Ingeniería
+					Informática.</p>
+
+				<p>
+					Este trabajo es un fork del proyecto de Raw Density de <a
+						href="http://www.densitydesign.org"> DensityDesign Lab </a> cuyo
+					autores son <a href="https://github.com/giorgiocaviglia"> de
+						Giorgio Caviglia,</a> Michele Mauri, Giorgio Uboldi, Matteo Azzi
+				</p>
+
+				<p>
+					En caso de necesidad de contactar con los autores puede realizarlo
+					enviando un correo a: <a href="mailto:jromero@pol.una.py">jromero@pol.una.py</a>,
+					<a href="mailto:pjlopez@pol.una.py">pjlopez@pol.una.py</a>
+				</p> <!-- Snippet home/snippets/about_text.html end -->
+			</td>
+		</tr>
+	</table>
 
 	<div id="footer">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6">
 					<p>
-						<strong>VIDA</strong> es un proyecto de Datos Abiertos de alumnos
+						<strong>VIDA</strong> es un pryecto de Datos Abiertos de alumnos
 						de la Facultad Politécnica (FP-UNA). El proyecto es una extensión
 						del trabajo <a href="http://www.densitydesign.org">
 							DensityDesign Lab </a>
@@ -138,91 +201,20 @@
 			</div>
 			<div align="center">
 				<p>
-					&copy; 2013-2014 (<a
+
+
+
+					<!--              <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank"> -->
+					<!--             <img width="80" height="30" src="/imgs/CC-BY_icon.svg.png"><br></a> -->
+					Datos Abiertos. Extensión Proyecto <a
+						href="http://github.com/srpablino/raw"> Raw Density </a>. &copy;
+					2013-2014 (<a
 						href="https://raw.github.com/densitydesign/raw/master/LICENSE">LGPL
 						License</a>)
-				</p>
-
-				<!--              <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank"> -->
-				<!--             <img width="80" height="30" src="/imgs/CC-BY_icon.svg.png"><br></a> -->
-				Datos Abiertos. Extensión Proyecto <a
-					href="http://github.com/srpablino/raw"> Raw Density </a>.
 				</p>
 
 			</div>
 		</div>
 	</div>
-
-	<!-- jquery -->
-	<script type="text/javascript"
-		src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-	<!-- bootstrap -->
-	<script type="text/javascript"
-		src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-	<!-- d3 -->
-	<script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/d3-plugins/sankey/sankey.js"></script>
-	<script type="text/javascript"
-		src="bower_components/d3-plugins/hexbin/hexbin.js"></script>
-	<!-- codemirror -->
-	<script type="text/javascript"
-		src="bower_components/codemirror/lib/codemirror.js"></script>
-	<script type="text/javascript"
-		src="bower_components/codemirror/addon/display/placeholder.js"></script>
-	<!-- canvastoblob -->
-	<script type="text/javascript"
-		src="bower_components/canvas-toBlob.js/canvas-toBlob.js"></script>
-	<!-- filesaver -->
-	<script type="text/javascript"
-		src="bower_components/FileSaver/FileSaver.js"></script>
-	<!-- zeroclipboard -->
-	<script type="text/javascript"
-		src="bower_components/zeroclipboard/ZeroClipboard.min.js"></script>
-	<!-- tip para el d3 -->
-	<script type="text/javascript" src="bower_components/d3-tip/index.js"></script>
-
-	<!-- raw -->
-	<script type="text/javascript" src="lib/raw.js"></script>
-
-	<!-- charts -->
-	
-	
-	<script src="charts/zoomable_sunburst.js"></script>
-	<script src="charts/zoomable_icicle.js"></script>
-	<script src="charts/zoomable_treemap.js"></script>
-
-	<!-- angular -->
-	<script type="text/javascript"
-		src="bower_components/angular/angular.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/angular-route/angular-route.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/angular-animate/angular-animate.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/angular-ui/build/angular-ui.min.js"></script>
-	<script type="text/javascript"
-		src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
-
-	<script src="js/app.js"></script>
-	<script src="js/services.js"></script>
-	<script src="js/controllers.js"></script>
-	<script src="js/filters.js"></script>
-	<script src="js/directives.js"></script>
-
-	<!-- google analytics -->
-	<script src="js/analytics.js"></script>
-
-
 </body>
 </html>

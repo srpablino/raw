@@ -9,7 +9,7 @@ body {
 
 h2 {
   font-size: 18px;
-  font-family: 'Karla', sans-serif;
+  font-family: ;
   font-weight: 300;
   line-height: 26px;
   margin-top: 0px;
@@ -173,7 +173,7 @@ section.dark {
 .navbar .nav>li>a {
   font-size: 17px;
   font-weight: 400;
-  color: #0dc4a3;
+  color: #408ad2;
 
   -webkit-transition: color .15s ease-in-out;
   -moz-transition: color .15s ease-in-out;
@@ -222,7 +222,7 @@ section.dark {
 }
 
 .alert-success {
-  background-color: #0dc4a3;
+  background-color: #408ad2;
   color:#fff;
 }
 
@@ -325,7 +325,7 @@ textarea:focus {
 
 .btn-success.disabled, .btn-success[disabled], fieldset[disabled] .btn-success, .btn-success.disabled:hover, .btn-success[disabled]:hover, fieldset[disabled] .btn-success:hover, .btn-success.disabled:focus, .btn-success[disabled]:focus, fieldset[disabled] .btn-success:focus, .btn-success.disabled:active, .btn-success[disabled]:active, fieldset[disabled] .btn-success:active, .btn-success.disabled.active, .btn-success[disabled].active, fieldset[disabled] .btn-success.active,
 .btn-success {
-  background-color: #0dc4a3;
+  background-color: #408ad2;
 }
 
 .btn-success.disabled {
@@ -333,7 +333,7 @@ textarea:focus {
 }
 
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
-  background-color: #0dc4a3;
+  background-color: #408ad2;
 }
 
 .btn .caret {
@@ -351,7 +351,7 @@ textarea:focus {
 }
 
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
-  background-color: #0dc4a3;
+  background-color: #408ad2;
 }
 
 .dropdown-menu>li>a {
@@ -603,7 +603,7 @@ textarea:focus {
 .dimension {
   cursor: move;
   color: #ffffff;
-  background-color: #0dc4a3;
+  background-color: #408ad2;
   border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
@@ -624,7 +624,7 @@ textarea:focus {
   position: absolute;
   top: 12px;
   right: 10px;
-  color: #0dc4a3;
+  color: #408ad2;
 }
 
 .dimension-type {
