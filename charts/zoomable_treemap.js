@@ -89,7 +89,40 @@
 	var svg;
 	var color = d3.scale.category20c();
 	var grandparent;
+	
+	var tip= d3.tip()
+		.attr('class', 'd3-tip')
+		.style("opacity", 1)
+		.offset([-5, 0])
+		.style("line-height",1)
+		.style("font-weight","bold")
+		.style("padding","12px")
+		.style("background","rgba(0, 0, 0, 0.8)")
+		.style("color","#fff")
+		.style("border-radius","2px")
+		.html(function(d) {
+			var name = d.name;
+		var porcen = d.parent ? (d.value/d.parent.value) * 100 : 100;
+		porcen=redondeo2decimales(porcen);
+		var padre = d.parent ? " sobre  &nbsp"+d.parent.class+" " : '';
+			return "<p style=\"color:white\"><strong>Grupo: &nbsp</strong> <span >" + d.class + "</span></p>" + 
+					"<p style=\"color:white\"> <strong>Cantidad: &nbsp</strong> <span >" + format_number(d.value) + "</span></p>" + 
+					"<p style=\"color:white\"> <strong>Porcentaje"+padre+":</strong> "+ porcen +"%" ;
+		});
+	
+	function format_number(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 
+	/**
+	 * Redondeo de numeros
+	 */
+	function redondeo2decimales(numero) {
+		var flotante = parseFloat(numero);
+		var resultado = Math.round(flotante*100)/100;
+		return resultado;
+	}
+	
 	var partition = d3.layout.partition().value(function(d) {
 		return d.size;
 	});
@@ -102,7 +135,7 @@
 		.style("margin-left",-margin.left + "px")
 		.style("margin.right", -margin.right + "px")
 			
-			
+		
 		grandparent = svg.append("g").attr("class", "grandparent");
 		var volver=grandparent.append("rect")
 								.attr("y", 0).attr("width", width)
@@ -111,15 +144,16 @@
 								.style("cursor","pointer")
 								.style("stroke","#fff")
 								.style("padding","5px")
-								
+									
 
-		volver.append("text").text("Volver");
+		
 
 		svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")")
 		.style("shape-rendering", "crispEdges").attr("y",margin.top).attr("id","rects");
 		nodes = partition.nodes(data);
 		
-
+		
+				
 		initialize(data);
 		accumulate(data);
 		layout(data);
@@ -185,11 +219,16 @@
 		g.selectAll(".child").data(function(d) {
 			return d._children || [ d ];
 		}).enter().append("rect").attr("class", "child").call(rect);
-
-		g.append("rect").attr("class", "parent").call(rect).append("title")
+		
+		g.call(tip);	
+		g.append("rect").attr("class", "parent")
+		.call(rect)
+		.on("mouseover",function(d){tip.show(d);mouseover(d)})
+		.on("mouseout", function(d){tip.hide(d);mouseleave(d)})
+			/*.call(rect).append("title")
 				.text(function(d) {
 					return formatNumber(d.value);
-				});
+				});*/
 
 		g.append("text").attr("dy", ".75em").text(function(d) {
 			return d.name;
@@ -255,6 +294,35 @@
 		.style("stroke", "#fff")
 		.style("padding", "5px");
 	}
+	
+	function getAncestors(node) {
+	  var camino = [];
+	  var current = node;
+	  while (current.parent) {
+		camino.unshift(current);
+		current = current.parent;
+	  }
+	  return camino;
+	}
+	
+	function mouseover(d){
+		svg.selectAll("rect")
+      .style("opacity", 0.2);
+	  var sequenceArray = getAncestors(d);
+
+	  // Then highlight only those that are an ancestor of the current segment.
+	  svg.selectAll("rect")
+		  .filter(function(node) {
+                return (sequenceArray.indexOf(node) >= 0);
+              })
+      .style("opacity", 1);
+	}
+	
+	function mouseleave(d){
+		svg.selectAll("rect")
+      .style("opacity", 1);
+	}
+	
 
 	function name(d) {
 		return d.parent ? name(d.parent) + "." + d.name : d.name;

@@ -86,15 +86,20 @@
 		.attr('class', 'd3-tip')
 		.style("opacity", 1)
 		.offset([-5, 0])
+		.style("line-height",1)
+		.style("font-weight","bold")
+		.style("padding","12px")
+		.style("background","rgba(0, 0, 0, 0.8)")
+		.style("color","#fff")
+		.style("border-radius","2px")
 		.html(function(d) {
 			var name = d.name;
 		var porcen = d.parent ? (d.value/d.parent.value) * 100 : 100;
 		porcen=redondeo2decimales(porcen);
 		var padre = d.parent ? " sobre  &nbsp"+d.parent.class+" " : '';
-			return "<p><strong>Grupo: &nbsp</strong> <span style='color:black'>" + d.class + "</span></p>" + 
-					"<p> <strong>Cantidad: &nbsp</strong> <span style='color:black'>" + format_number(d.value) + "</span></p>" + 
-					//"<p> <strong>Porcentaje"+padre+":</strong> <span style='color:black'>" + porcen + "%</span></p>" ;
-					"<p> <strong>Porcentaje"+padre+":</strong> "+ porcen +"%" ;
+			return "<p style=\"color:white\"><strong>Grupo: &nbsp</strong> <span >" + d.class + "</span></p>" + 
+					"<p style=\"color:white\"> <strong>Cantidad: &nbsp</strong> <span >" + format_number(d.value) + "</span></p>" + 
+					"<p style=\"color:white\"> <strong>Porcentaje"+padre+":</strong> "+ porcen +"%" ;
 		});
 	
 	function format_number(x) {
@@ -142,12 +147,12 @@
 				
 	});
 	function mouseover(d){
-		svg.selectAll("path")
+		svg.selectAll("rect")
       .style("opacity", 0.2);
 	  var sequenceArray = getAncestors(d);
 
 	  // Then highlight only those that are an ancestor of the current segment.
-	  svg.selectAll("path")
+	  svg.selectAll("rect")
 		  .filter(function(node) {
                 return (sequenceArray.indexOf(node) >= 0);
               })
@@ -165,7 +170,7 @@
 	}
 
 	function mouseleave(d){
-		svg.selectAll("path")
+		svg.selectAll("rect")
       .style("opacity", 1);
 	}
 	

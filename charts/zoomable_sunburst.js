@@ -91,15 +91,20 @@
 		.attr('class', 'd3-tip')
 		.style("opacity", 1)
 		.offset([-5, 0])
+		.style("line-height",1)
+		.style("font-weight","bold")
+		.style("padding","12px")
+		.style("background","rgba(0, 0, 0, 0.8)")
+		.style("color","#fff")
+		.style("border-radius","2px")
 		.html(function(d) {
 			var name = d.name;
 		var porcen = d.parent ? (d.value/d.parent.value) * 100 : 100;
 		porcen=redondeo2decimales(porcen);
 		var padre = d.parent ? " sobre  &nbsp"+d.parent.class+" " : '';
-			return "<p><strong>Grupo: &nbsp</strong> <span style='color:black'>" + d.class + "</span></p>" + 
-					"<p> <strong>Cantidad: &nbsp</strong> <span style='color:black'>" + format_number(d.value) + "</span></p>" + 
-					//"<p> <strong>Porcentaje"+padre+":</strong> <span style='color:black'>" + porcen + "%</span></p>" ;
-					"<p> <strong>Porcentaje"+padre+":</strong> "+ porcen +"%" ;
+			return "<p style=\"color:white\"><strong>Grupo: &nbsp</strong> <span >" + d.class + "</span></p>" + 
+					"<p style=\"color:white\"> <strong>Cantidad: &nbsp</strong> <span >" + format_number(d.value) + "</span></p>" + 
+					"<p style=\"color:white\"> <strong>Porcentaje"+padre+":</strong> "+ porcen +"%" ;
 		});
 	
 	function format_number(x) {
@@ -151,7 +156,7 @@
 				
 				texto.append("textPath")
 					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/5 ? d.name: ""; })
+				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? d.name: ""; })
 			  
 	});
 	
@@ -188,21 +193,33 @@
 	}
 	
 	function click(d) {
-		
+		var parent = d;
+		var dp = parent.depth;
 		path.transition()
 			.duration(750)
 			.attrTween("d", arcTween(d))
+		texto.selectAll("text").style("opacity",1);
 		
-		g.selectAll("text").remove();
-		/*var parent = d;
-		texto=g.data(nodes.filter(function(d){}))
-				.append("text")
+		console.log("valor "+d.class.split(" --> ")[dp])
+		
+		
+		
+		/*texto.append("textPath")
+					.attr("xlink:href",function(d,i){return "#s"+i})
+				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? d.name: ""; })
+		*/
+		
+		texto.style("opacity",function(d){console.log("split "+d.class.split(" --> ")[dp] +" parent "+ parent.name);return d.class.split(" --> ")[dp] == parent.name & x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? 1 : 0});
+		
+		/*
+		texto=g.append("text")
 				.style("font-size",16)
 				.attr("x", function(d) { return 10 })
 				.attr("dy", function(d) { return 30   })
 				.append("textPath")
 					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d) {console.log(" x " + d.x + " dx "+d.dx + " nombre "+d.name+" y "+d.y);return  x(d.dx)/(d.y+d.dy/2) >= Math.PI/5 ? d.name: "";})*/
+				    .text(function(d) {return  x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 &
+						d.class.split(" --> ")[dp] == parent.name ? d.name: "" })*/
       
 	}
 	
