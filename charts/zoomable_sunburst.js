@@ -161,7 +161,7 @@
 				.on("mouseover",function(d){tip.show(d);mouseover(d);})
 				.on("mouseout", function(d){tip.hide(d);mouseleave(d)})
 				.on("click", click);
-		
+		/*
 		texto=g.append("text")
 				.style("font-size",11)
 				.attr("x", function(d) {return 5	 })
@@ -176,7 +176,7 @@
 												var textoSize = $.fn.textWidth(d.name,"11px");	
 												console.log("textosize "+textoSize+" dANgle "+dAngle); 
 												return  textoSize <= dAngle ? d.name: ""; 
-											})
+											})*/
 		click(nodes[0]);	  
 	});
 	
@@ -211,11 +211,11 @@
 				.duration(750)
 				.attrTween("d", arcTween(d))
 				
-			textPath.attr("xlink:href",function(d,i){return "#s"+i})
+			/*textPath.attr("xlink:href",function(d,i){return "#s"+i})
 				.text(function(d){	var sAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x)));
 									var eAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
 									var dAngle = (eAngle - sAngle)*180; 
-										return $.fn.textWidth(d.name,"11px") <= dAngle ? d.name : "" })
+										return $.fn.textWidth(d.name,"11px") <= dAngle ? d.name : "" })*/
 										/*return parent.parent ? 
 														(d.class.split(" --> ")[dp] == parent.name & $.fn.textWidth(d.name,"11px") <= dAngle ? d.name : "")
 														: $.fn.textWidth(d.name,"11px") <= dAngle ? d.name : "" })*/
