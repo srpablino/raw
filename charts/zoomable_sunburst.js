@@ -123,9 +123,21 @@
 
 	var texto;
 	var nodes;	
+	function getAncestors(node) {
+	  var camino = [];
+	  var current = node;
+	  while (current.parent) {
+		camino.unshift(current);
+		current = current.parent;
+	  }
+	  return camino;
+	}
+	
 	chart.draw(function (selection, data){
 		
+		
 		svg=selection;
+		
 		nodes=partition.nodes(data);
 		
 		svg=svg.attr("width", width)
@@ -157,77 +169,48 @@
 				texto.append("textPath")
 					.attr("xlink:href",function(d,i){return "#s"+i})
 				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? d.name: ""; })
-				    
-			  
+	
+		click(nodes[0]);	  
 	});
+	
+	function mouseover(d){
+			g.selectAll("path")
+		  .style("opacity", 0.2);
+		  var sequenceArray = getAncestors(d);
+
+		  // Then highlight only those that are an ancestor of the current segment.
+		  g.selectAll("path")
+			  .filter(function(node) {
+					return (sequenceArray.indexOf(node) >= 0);
+				  })
+		  .style("opacity", 1);
+		}
+		
+		function mouseleave(d){
+			g.selectAll("path")
+		  .style("opacity", 1);
+		}
+		
+		function click(d) {
+			var parent = d;
+			var dp = parent.depth;
+			path.transition()
+				.duration(750)
+				.attrTween("d", arcTween(d))
+			texto.style("opacity",1);
+			
+			console.log("valor "+d.class.split(" --> ")[dp])
+			
+			texto.style("opacity",function(d){return parent.parent ? 
+															(d.class.split(" --> ")[dp] == parent.name & x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? 1 : 0)
+															: x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? 1 : 0 })
+			
+		}
 	
 	function computeTextRotation(d) {
 	  return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180 ;
 	}
-	
-	function mouseover(d){
-		g.selectAll("path")
-      .style("opacity", 0.2);
-	  var sequenceArray = getAncestors(d);
 
-	  // Then highlight only those that are an ancestor of the current segment.
-	  g.selectAll("path")
-		  .filter(function(node) {
-                return (sequenceArray.indexOf(node) >= 0);
-              })
-      .style("opacity", 1);
-	}
-	
-	function getAncestors(node) {
-	  var camino = [];
-	  var current = node;
-	  while (current.parent) {
-		camino.unshift(current);
-		current = current.parent;
-	  }
-	  return camino;
-	}
-
-	function mouseleave(d){
-		g.selectAll("path")
-      .style("opacity", 1);
-	}
-	
-	function click(d) {
-		var parent = d;
-		var dp = parent.depth;
-		path.transition()
-			.duration(750)
-			.attrTween("d", arcTween(d))
-		texto.style("opacity",1);
-		
-		console.log("valor "+d.class.split(" --> ")[dp])
-		
-		
-		
-		/*texto.append("textPath")
-					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? d.name: ""; })
-		*/
-		
-		
-		
-		texto.style("opacity",function(d){return parent.parent ? 
-														(d.class.split(" --> ")[dp] == parent.name & x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? 1 : 0)
-														: x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? 1 : 0 })
-		
-		/*
-		texto=g.append("text")
-				.style("font-size",16)
-				.attr("x", function(d) { return 10 })
-				.attr("dy", function(d) { return 30   })
-				.append("textPath")
-					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d) {return  x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 &
-						d.class.split(" --> ")[dp] == parent.name ? d.name: "" })*/
-      
-	}
-	
 	d3.select(self.frameElement).style("height", height + "px");
 	
 	// Interpolate the scales!

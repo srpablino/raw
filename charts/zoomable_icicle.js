@@ -36,8 +36,6 @@
 			//leaf.label = label(d);
 			delete leaf.children;
       });
-      
-	  	
       return root;
     })
 	
@@ -117,6 +115,7 @@
 	var nodes;
 	chart.draw(function (selection, data){
 		svg=selection;
+	
 		svg=svg.attr("width", width)
 			.attr("height", height)
 			.append("g")
@@ -143,6 +142,8 @@
 				.style("font-size","11px")
 				.style("font-family","Arial, Helvetica")
 				.text(function(d) { var cadena= d.dx >= 0.25 ? d.name : "";return cadena});
+			
+			click(nodes[0]);
 		
 				
 	});

@@ -17,7 +17,7 @@ angular.module('raw.directives', [])
 
 	        	if (!scope.chart || !scope.data.length) return;
 						if (!scope.model.isValid()) return;
-
+				
 	        	d3.select(element[0])
 	        		.append("svg")
 	        		.datum(scope.data)

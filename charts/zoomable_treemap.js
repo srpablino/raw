@@ -89,7 +89,7 @@
 	var svg;
 	var color = d3.scale.category20c();
 	var grandparent;
-	
+	var nodes;
 	var tip= d3.tip()
 		.attr('class', 'd3-tip')
 		.style("opacity", 1)
@@ -126,9 +126,11 @@
 	var partition = d3.layout.partition().value(function(d) {
 		return d.size;
 	});
-
+	
 	chart.draw(function(selection, data) {
+		d3.select("#chart svg rect").remove();
 		svg = selection;
+		
 		svg
 		.attr("width", width + margin.left + margin.right)
 		.attr("height",height )
@@ -150,14 +152,22 @@
 
 		svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")")
 		.style("shape-rendering", "crispEdges").attr("y",margin.top).attr("id","rects");
+		//console.log("first data: "+JSON.stringify(data));
+		
 		nodes = partition.nodes(data);
+		console.log("depth  "+data.depth);
 		
+		x = d3.scale.linear().domain([ 0, width ]).range([ 0, width ]);
+	    y = d3.scale.linear().domain([ 0, height ]).range([ 0, height ]);
 		
-				
 		initialize(data);
 		accumulate(data);
 		layout(data);
 		display(data);
+		
+		console.log(" final del codigo del treemap! ");
+		
+		
 		
 	})
 
@@ -202,11 +212,11 @@
 			});
 		}
 	}
-
+	
 	function display(d) {
 		grandparent.datum(d.parent).on("click", transition).select("text")
 				.text(name(d));
-
+		
 		var g1 = svg.insert("g", ".grandparent").datum(d)
 				.attr("class", "depth");
 
@@ -307,7 +317,7 @@
 	
 	function mouseover(d){
 		svg.selectAll("rect")
-      .style("opacity", 0.2);
+      .style("opacity", 0.4);
 	  var sequenceArray = getAncestors(d);
 
 	  // Then highlight only those that are an ancestor of the current segment.

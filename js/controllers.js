@@ -32,7 +32,7 @@ angular.module('raw.controllers', [])
     $scope.error = false;
     $scope.loading = true;
 	//'Correlations', 'Distributions', 'Time Series',
-    $scope.categories = [ 'Zoomable','Others'];
+    $scope.categories = [ 'Zoomable'];
 
     $scope.parse = function(text){
 
@@ -67,7 +67,6 @@ angular.module('raw.controllers', [])
     $scope.charts = raw.charts.values().sort(function (a,b){ return a.title() < b.title() ? -1 : a.title() > b.title() ? 1 : 0; });
     $scope.chart = $scope.charts[0];
     $scope.model = $scope.chart ? $scope.chart.model() : null;
-
     $scope.$watch('error', function (error){
       if (!$('.CodeMirror')[0]) return;
       var cm = $('.CodeMirror')[0].CodeMirror;
@@ -96,8 +95,20 @@ angular.module('raw.controllers', [])
     }
 
     $scope.selectChart = function(chart){
-      if (chart == $scope.chart) return;
-      $scope.model.clear();
+      if (chart == $scope.chart){
+		  $scope.chart.model($scope.model);
+		  console.log("same chart!");
+		  return;
+		  } 
+	  
+	  //d3.select("#chart svg").remove();
+	  
+      if (chart.category() == $scope.chart.category()){
+		  $scope.chart = chart;
+		  $scope.chart.model($scope.model);
+		  return;
+	  } 
+	  $scope.model.clear();
       $scope.chart = chart;
       $scope.model = $scope.chart.model();
     }
