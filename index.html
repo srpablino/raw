@@ -26,6 +26,7 @@
 <link rel="stylesheet" type="text/css"
 	href="bower_components/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="css/raw.css" />
+<link rel="stylesheet" href="css/introjs.css" />
 <link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
@@ -35,7 +36,7 @@
 
 	<nav class="navbar" style="min-height: 120px;" role="navigation"
 		id="raw-nav">
-		<div class="container">
+		<div id="un-id" class="container">
 			<table cellpadding="0" style="width: 100%">
 				<tbody>
 					<tr>
@@ -51,17 +52,18 @@
 						<td><div class="collapse navbar-collapse navbar-right"
 								id="raw-navbar">
 								<ul class="nav navbar-nav">
+									<li><a href="#">Inicio</a></li>
 									<li><a href="./acerca_de.html" target="./acerca_de.html">Acerca
 											de</a></li>
-									<li><a
-										href="https://github.com/densitydesign/raw/wiki/Developer-Guide">Guía
-											del Desarrollador</a></li>
+									
 									<li><a
 										href="https://github.com/densitydesign/raw/wiki/API-Reference">Librería
 											API</a></li>
 									<li><a
 										href="https://github.com/densitydesign/raw/wiki/FAQs">FAQ</a></li>
 									<li><a href="https://github.com/srpablino/raw">Github</a></li>
+									<li ><a id="start-tour" href="#">Ayuda</a></li>
+									<li><a href="http://opendata.pol.una.py/?page_id=154#final">Datos Abiertos FP-UNA</a></li>
 								</ul>
 							</div></td>
 					</tr>
@@ -80,23 +82,13 @@
 				<div class="col-lg-6">
 					<p>
 						<strong>VIDA</strong> es un proyecto de Datos Abiertos de alumnos
-						de la Facultad Politécnica (FP-UNA). El proyecto es una extensión
-						del trabajo <a href="http://www.densitydesign.org">
-							DensityDesign Lab </a>
+						de laFacultad Politécnica (FP-UNA).</a>
 					</p>
-					<p>
-						<a href="https://github.com/giorgiocaviglia"> de Giorgio
-							Caviglia,</a> Michele Mauri, Giorgio Uboldi, Matteo Azzi
-					</p>
-					<p>
-						&copy; 2013-2014 (<a
-							href="https://raw.github.com/densitydesign/raw/master/LICENSE">LGPL
-							License</a>)
-					</p>
+					
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<p>
-						<u>Autores de la extensión VIDA</u>
+						<u>Autores VIDA</u>
 					</p>
 					<p>
 						<a href="mailto:jromero@pol.una.py"><i
@@ -109,17 +101,7 @@
 							pjlopez@pol.una.py</a>
 					</p>
 
-					<p>
-						<u>Autores Originales del RAW Density</u>
-					</p>
-					<p>
-						<a href="mailto:raw@densitydesign.org"><i
-							class="fa fa-envelope breath-right"></i>raw@densitydesign.org</a>
-					</p>
-					<p>
-						<a href="http://twitter.com/densitydesign"><i
-							class="fa fa-twitter breath-right"></i>densitydesign</a>
-					</p>
+					
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<p>
@@ -152,6 +134,11 @@
 		</div>
 	</div>
 
+	<script type="text/javascript"
+		src="/js/post.js"></script>
+
+	<!-- para hacer el hash -->
+	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
 	<!-- jquery -->
 	<script type="text/javascript"
 		src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -189,10 +176,30 @@
 
 	<!-- raw -->
 	<script type="text/javascript" src="lib/raw.js"></script>
+	
+	<!-- intro.js HELPER dynamic -->
+	<script type="text/javascript"
+		src="bower_components/intro.js/intro.js"></script>
 
 	<!-- charts -->
 	
-	
+	 <script src="charts/treemap.js"></script>
+	  <script src="charts/streamgraph.js"></script>
+	  <script src="charts/scatterPlot.js"></script>
+	  <script src="charts/packing.js"></script>
+	  <script src="charts/clusterDendrogram.js"></script>
+	  <script src="charts/voronoi.js"></script>
+	  <script src="charts/delaunay.js"></script>
+	  <script src="charts/alluvial.js"></script>
+	  <script src="charts/clusterForce.js"></script>
+	  <script src="charts/convexHull.js"></script>
+	  <script src="charts/hexagonalBinning.js"></script>
+	  <script src="charts/reingoldTilford.js"></script>
+	  <script src="charts/parallelCoordinates.js"></script>
+	  <script src="charts/circularDendrogram.js"></script>
+	  <script src="charts/smallMultiplesArea.js"></script>
+	  <script src="charts/bumpChart.js"></script>
+
 	<script src="charts/zoomable_sunburst.js"></script>
 	<script src="charts/zoomable_icicle.js"></script>
 	<script src="charts/zoomable_treemap.js"></script>
@@ -218,9 +225,11 @@
 	<script src="js/controllers.js"></script>
 	<script src="js/filters.js"></script>
 	<script src="js/directives.js"></script>
-
+	
 	<!-- google analytics -->
 	<script src="js/analytics.js"></script>
+	
+	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
 
 
 </body>

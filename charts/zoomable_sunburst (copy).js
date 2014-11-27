@@ -37,7 +37,7 @@
 			delete leaf.children;
       });
       
-	  	jsonData=JSON.stringify(root);
+	  	
       return root;
     })
 	
@@ -122,7 +122,6 @@
 
 
 	var texto;
-	var textPath;
 	var nodes;	
 	function getAncestors(node) {
 	  var camino = [];
@@ -136,8 +135,7 @@
 	
 	chart.draw(function (selection, data){
 		
-		nombreGrafico="zoomable_sunburst";	
-		categoriaGrafico="zoomable";	
+		
 		svg=selection;
 		
 		nodes=partition.nodes(data);
@@ -164,20 +162,24 @@
 		
 		texto=g.append("text")
 				.style("font-size",11)
-				.attr("x", function(d) {return 5	 })
+				.attr("x", function(d) {/*var sAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x)));
+										var eAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
+										var dAngle = (eAngle - sAngle)/2;  */
+										return 50	 })
 				.attr("dy", function(d) { return 30   })
 		
-		textPath=texto.append("textPath")
+		texto.append("textPath")
 				.attr("xlink:href",function(d,i){return "#s"+i})
-				.text(function(d,i) { 
-												var sAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x)));
-												var eAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
-												var dAngle = (eAngle - sAngle)*180; 
-												var textoSize = $.fn.textWidth(d.name,"11px");	
-												console.log("textosize "+textoSize+" dANgle "+dAngle); 
-												return  textoSize <= dAngle ? d.name: ""; 
-											})
-		click(nodes[0]);	  
+				.text(function(d,i) {
+									var sAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x)));
+									var eAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
+									var dAngle = (eAngle - sAngle)*180; 
+									var textoSize = $.fn.textWidth(d.name,"11px");	
+									console.log("textosize "+textoSize+" dANgle "+dAngle); 
+									return  textoSize <= dAngle ? d.name: ""; })
+				//.text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? d.name: ""; })
+	
+		//click(nodes[0]);	  
 	});
 	
 	$.fn.textWidth = function(text, font) {
@@ -210,15 +212,25 @@
 			path.transition()
 				.duration(750)
 				.attrTween("d", arcTween(d))
-				
-			textPath.attr("xlink:href",function(d,i){return "#s"+i})
-				.text(function(d){	var sAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x)));
+			
+			/*texto.style("opacity",1);
+			
+			console.log("valor "+d.class.split(" --> ")[dp])
+			
+			texto.style("opacity",function(d){return parent.parent ? 
+															(d.class.split(" --> ")[dp] == parent.name & x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? 1 : 0)
+															: x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? 1 : 0 })
+			*/
+			texto
+				.text(function(d,i) {
+									var sAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x)));
 									var eAngle=Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
 									var dAngle = (eAngle - sAngle)*180; 
-										return $.fn.textWidth(d.name,"11px") <= dAngle ? d.name : "" })
-										/*return parent.parent ? 
-														(d.class.split(" --> ")[dp] == parent.name & $.fn.textWidth(d.name,"11px") <= dAngle ? d.name : "")
-														: $.fn.textWidth(d.name,"11px") <= dAngle ? d.name : "" })*/
+									var textoSize = $.fn.textWidth(d.name,"11px");	
+									console.log("textosize "+textoSize+" dANgle "+dAngle); 
+									return  textoSize <= dAngle ? d.name: ""; })
+		
+			
 		}
 	
 	function computeTextRotation(d) {

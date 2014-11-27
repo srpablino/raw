@@ -1,66 +1,7 @@
 (function() {
-
-	// modelo
-	var tree = raw.model();
-
-	var hierarchy = tree.dimension('Jerarquias').title('Jerarquias')
-			.description("Jerarquias para agrupar los datos").required(1)
-			.multiple(true);
-
-	var size = tree.dimension('Medida').title('Medida').description(
-			"Campo por el que se va a totalizar").accessor(function(d) {
-		return +d;
-	}).types(Number)
-
-	tree.map(function(data) {
-		var root = {
-			children : []
-		};
-		root.name = "";
-		root.class = "_total_ ";
-		data.forEach(function(d) {
-			if (!hierarchy())
-				return root;
-			var leaf = seek(root, hierarchy(d), hierarchy());
-			if (leaf === false || !leaf)
-				return;
-			if (!leaf.size)
-				leaf.size = 0;
-			leaf.size += size() ? +size(d) : 1;
-			delete leaf.children;
-		});
-		jsonData=JSON.stringify(root);
-		return root;
-	})
-
-	function seek(root, path, classes) {
-		if (path.length < 1)
-			return false;
-		// console.log("resultado del path "+ JSON.stringify(path));
-		if (!root.children)
-			root.children = [];
-		var p = root.children.filter(function(d) {
-			return d.name == path[0];
-		})[0];
-		// console.log("lo que hay en p "+ JSON.stringify(p));
-		if (!p) {
-			if (/\S/.test(path[0])) {
-
-				p = {
-					name : path[0],
-					class : root.class + " --> " + path[0],
-					children : []
-				};
-				root.children.push(p);
-			} else
-				p = root;
-		}
-		if (path.length == 1)
-			return p;
-		else
-			return seek(p, path.slice(1), classes.slice(1));
-	}
-
+	var scriptPram = document.getElementById('id_script_zoom');
+	var nombreArchivo = scriptPram.getAttribute('json-name');
+	var nombreGrafico = "zoomable_treemap.js"
 	// grafico
 	var margin = {
 		top : 20,
@@ -81,15 +22,11 @@
 	}).ratio(height / width * 0.5 * (1 + Math.sqrt(5))).round(false);
 
 	// chart_raw
-	var chart = raw.chart().title("Zoomable Treemap").description(
-			"Agrupacion con zoom por categorias")
-			.thumbnail("imgs/zoomable_treemap.png")
-			.category("Zoomable").model(tree)
 
-	var svg;
+	var svg=d3.select("#chart").append("svg");
 	var color = d3.scale.category20c();
 	var grandparent;
-	var nodes;
+	
 	var tip= d3.tip()
 		.attr('class', 'd3-tip')
 		.style("opacity", 1)
@@ -126,12 +63,8 @@
 	var partition = d3.layout.partition().value(function(d) {
 		return d.size;
 	});
-	
-	chart.draw(function(selection, data) {
-		nombreGrafico="zoomable_treemap";
-		categoriaGrafico="zoomable";
-		d3.select("#chart svg rect").remove();
-		svg = selection;
+
+	d3.json(nombreArchivo, function(error, data) {
 		
 		svg
 		.attr("width", width + margin.left + margin.right)
@@ -154,22 +87,14 @@
 
 		svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")")
 		.style("shape-rendering", "crispEdges").attr("y",margin.top).attr("id","rects");
-		//console.log("first data: "+JSON.stringify(data));
-		
 		nodes = partition.nodes(data);
-		console.log("depth  "+data.depth);
 		
-		x = d3.scale.linear().domain([ 0, width ]).range([ 0, width ]);
-	    y = d3.scale.linear().domain([ 0, height ]).range([ 0, height ]);
 		
+				
 		initialize(data);
 		accumulate(data);
 		layout(data);
 		display(data);
-		
-		console.log(" final del codigo del treemap! ");
-		
-		
 		
 	})
 
@@ -214,11 +139,11 @@
 			});
 		}
 	}
-	
+
 	function display(d) {
 		grandparent.datum(d.parent).on("click", transition).select("text")
 				.text(name(d));
-		
+
 		var g1 = svg.insert("g", ".grandparent").datum(d)
 				.attr("class", "depth");
 
@@ -319,7 +244,7 @@
 	
 	function mouseover(d){
 		svg.selectAll("rect")
-      .style("opacity", 0.3);
+      .style("opacity", 0.2);
 	  var sequenceArray = getAncestors(d);
 
 	  // Then highlight only those that are an ancestor of the current segment.

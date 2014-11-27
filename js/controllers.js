@@ -7,10 +7,14 @@ angular.module('raw.controllers', [])
   .controller('RawCtrl', function ($scope, dataService) {
 
     $scope.samples = [
+      //{ title : 'Datos de Rodados del M. E. C. (Paraguay)', url : 'data/rodados.csv' },
+      { title : 'Matriculaciones por Departamento y Distrito M. E. C. (Paraguay)', url : 'data/matriculaciones_mec.csv' },
       { title : 'Autos (multivariate)', url : 'data/multivariate.csv' },
       { title : 'Peliculas (dispersions)', url : 'data/dispersions.csv' },
       { title : 'Musica (flows)', url : 'data/flows.csv' },
       { title : 'Cocktails (correlations)', url : 'data/correlations.csv' }
+
+
     ]
 
     $scope.$watch('sample', function (sample){
@@ -32,7 +36,7 @@ angular.module('raw.controllers', [])
     $scope.error = false;
     $scope.loading = true;
 	//'Correlations', 'Distributions', 'Time Series',
-    $scope.categories = [ 'Zoomable'];
+    $scope.categories = [ 'Correlations', 'Distributions', 'Time Series', 'Hierarchies', 'Zoomable'];
 
     $scope.parse = function(text){
 
@@ -67,6 +71,7 @@ angular.module('raw.controllers', [])
     $scope.charts = raw.charts.values().sort(function (a,b){ return a.title() < b.title() ? -1 : a.title() > b.title() ? 1 : 0; });
     $scope.chart = $scope.charts[0];
     $scope.model = $scope.chart ? $scope.chart.model() : null;
+
     $scope.$watch('error', function (error){
       if (!$('.CodeMirror')[0]) return;
       var cm = $('.CodeMirror')[0].CodeMirror;
@@ -94,14 +99,14 @@ angular.module('raw.controllers', [])
       placeholder : 'Haga un copiar/pegar de los datos o suelte un archivo aqui. Si no cuenta con algún dataset pruebe utilizar los datasets de muestra! Click más arriba'
     }
 
+
+	
     $scope.selectChart = function(chart){
       if (chart == $scope.chart){
 		  $scope.chart.model($scope.model);
 		  console.log("same chart!");
 		  return;
 		  } 
-	  
-	  //d3.select("#chart svg").remove();
 	  
       if (chart.category() == $scope.chart.category()){
 		  $scope.chart = chart;
@@ -111,6 +116,8 @@ angular.module('raw.controllers', [])
 	  $scope.model.clear();
       $scope.chart = chart;
       $scope.model = $scope.chart.model();
+      
+      //categoriaGrafico= chart.category();
     }
 
     function refreshScroll(){

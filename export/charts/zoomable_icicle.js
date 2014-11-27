@@ -1,62 +1,7 @@
 (function(){
 	
-	var tree = raw.model();
-
-    var hierarchy = tree.dimension('Jerarquias')
-       .title('Jerarquias')
-       .description("Jerarquias para agrupar los datos")
-       .required(1)
-       .multiple(true);
-
-    var size = tree.dimension('Medida')
-       .title('Medida')
-       .description("Campo por el que se va a totalizar")
-       .accessor(function (d){ return +d; })
-       .types(Number)
-
-
-    /*var color = tree.dimension('color')
-       .title('Color')
-
-    var label = tree.dimension('label')
-       .title('Label')
-       .multiple(true)*/
-
-    tree.map(function (data){
-		var root = { children : [] };
-		root.name="";
-		root.class="_total_ ";
-		data.forEach(function (d){
-			if (!hierarchy()) return root;
-			var leaf = seek(root, hierarchy(d), hierarchy());
-			if(leaf === false || !leaf) return;
-			if (!leaf.size) leaf.size = 0;
-			leaf.size += size() ? +size(d) : 1;
-			//leaf.color = color(d);
-			//leaf.label = label(d);
-			delete leaf.children;
-      });
-      jsonData=JSON.stringify(root);
-      return root;
-    })
-	
-    function seek(root, path, classes) {
-      if (path.length < 1) return false;
-	  //console.log("resultado del path "+ JSON.stringify(path));
-      if (!root.children) root.children = [];
-      var p = root.children.filter(function (d){ return d.name == path[0]; })[0];
-	  //console.log("lo que hay en p "+ JSON.stringify(p));	
-      if (!p) {
-        if( /\S/.test(path[0]) ) {
-		  
-          p = { name: path[0], class:root.class +" --> "+path[0], children:[]};  
-          root.children.push(p);
-        } else p = root;
-      }
-      if (path.length == 1) return p;
-      else return seek(p, path.slice(1), classes.slice(1));
-    }
-
+	var scriptPram = document.getElementById('id_script_zoom');
+	var nombreArchivo = scriptPram.getAttribute('json-name');
 	var width = 860, height = 550;
 	
 	var x = d3.scale.linear()
@@ -67,14 +12,7 @@
 	
 	var color = d3.scale.category20();
 	
-	var svg;
-
-	var chart = raw.chart()
-		.title("Zoomable Icicle")
-		.description("Agrupacion icicle con zoom por categorias")
-		.thumbnail("imgs/zoomable_icicle.png")
-		.category("Zoomable")
-		.model(tree)
+	var svg=d3.select("#chart").append("svg");
 
 	var partition = d3.layout.partition()
 		.value(function(d) { return d.size; });
@@ -114,11 +52,10 @@
 		return resultado;
 	}
 	var nodes;
-	chart.draw(function (selection, data){
-		nombreGrafico="zoomable_icicle";
-		categoriaGrafico="zoomable";
-		svg=selection;
-	
+	var myData;
+	d3.json(nombreArchivo, function(error, data) {
+		
+		
 		svg=svg.attr("width", width)
 			.attr("height", height)
 			.append("g")
@@ -144,20 +81,10 @@
 				.attr("text-anchor", "middle")
 				.style("font-size","11px")
 				.style("font-family","Arial, Helvetica")
-				.text(function(d) { var cadena=$.fn.textWidth(d.name,"11px")  <= d.dx*width ? d.name : "";return cadena});
-			
-			click(nodes[0]);
+				.text(function(d) { var cadena= d.dx >= 0.25 ? d.name : "";return cadena});
 		
 				
 	});
-	
-	$.fn.textWidth = function(text, font) {
-		if (!$.fn.textWidth.fakeEl) $.fn.textWidth.fakeEl = $('<span>').hide().appendTo(document.body);
-			$.fn.textWidth.fakeEl.text(text || this.val() || this.text()).css('font', font || this.css('font'));
-		return $.fn.textWidth.fakeEl.width();
-	};
-	
-	
 	function mouseover(d){
 		svg.selectAll("rect")
       .style("opacity", 0.2);
@@ -187,6 +114,7 @@
 	}
 	
 	function click(d) {
+		
 	  x.domain([d.x, d.x + d.dx]);
 	  y.domain([d.y, 1]).range([d.y ? 20 : 0, height]);
 	  var nameFiltro = d.name;
@@ -196,17 +124,28 @@
 		  .attr("y", function(d) { return y(d.y); })
 		  .attr("width", function(d) { var w=x(d.x + d.dx) - x(d.x); return w  })
 		  .attr("height", function(d) { var h=y(d.y + d.dy) - y(d.y); return h  });
-	
-	texto.transition(750)
+	//hace volar todo el texto, deja en blanco el grafico
+	texto.transition()
+				.attr("x", function(d) { 9000 ; })
+				.attr("y", function(d) { 9000 ; })
+				.attr("dy", ".35em")
+				.attr("text-anchor", "middle")
+				.style("font-size","11px")
+				.style("font-family","Arial, Helvetica")
+				.text(function(d) { return d.name });				  
+    //reinserta texto, pero solo aquellos que cumplan condicion de filtro				
+	var max = (d.dx)/4;	  
+	texto.data(nodes.filter(function(d){return d.dx >= max}))
+				.transition()
 				.attr("x", function(d) { return x(d.x + d.dx/2) ; })
 				.attr("y", function(d) { return y(d.y + d.dy/2) ; })
 				.attr("dy", ".35em")
 				.attr("text-anchor", "middle")
 				.style("font-size","11px")
 				.style("font-family","Arial, Helvetica")
-				.text(function(d) { var w=x(d.x + d.dx) - x(d.x); 
-									var cadena= $.fn.textWidth(d.name,"11px")  <= w ? d.name : "";
-									return cadena} );				  			
-}
+				.text(function(d) { return d.name });				  
+	}
+	
+	
 	
 })();

@@ -1,11 +1,13 @@
 <div class="wrapper">
-
+<button id="continuar_tutorial" type="button" 
+				class="btn btn-success pull-right" style="display:none" >Inserte dataset y click para continuar el tutorial
+			</button>
 	<section class="">
 
-		<div class="container">
-
+		<div class="container" id="id-insertar-datos" >
+		
 			<h3 id="data">Inserta los datos
-				<button type="button"
+				<button id="id-elija-datasets"type="button"
 				class="choose btn btn-default"
 				ng-model="sample"
 				placeholder="o elija una de estas muestras de datasets"
@@ -24,8 +26,7 @@
 			</span>
 			<span class="clearfix"></span>
 		</h3>
-
-		<div data-ng-show="dataView != 'table'">
+		<div id="id-insertar-datasets" data-ng-show="dataView != 'table'">
 			<textarea ui-codemirror="codeMirrorOptions" ng-model="text">
 			</textarea>
 		</div>
@@ -34,7 +35,7 @@
 
 		<div>
 			<div data-ng-show="!loading && !data.length && !error" class="alert"><i class="fa fa-hand-o-right breath-right"></i> Cómo funciona? <a href="http://raw.densitydesign.org/how-it-works/">Observe éste video</a> o <a href="https://github.com/densitydesign/raw/wiki/FAQs">ingrese a los FAQs</a></div>
-			<div data-ng-show="!loading && !error && data.length" class="alert alert-success"><i class="fa fa-thumbs-up breath-right"></i><strong>{{data.length}}</strong> registros han sido parseados exitosamente!</div>
+			<div id='id_exito_show' data-ng-show="!loading && !error && data.length" class="alert alert-success"><i class="fa fa-thumbs-up breath-right"></i><strong>{{data.length}}</strong> registros han sido parseados exitosamente!</div>
 			<div data-ng-show="error" class="alert alert-warning"><i class="fa fa-thumbs-down breath-right"></i><strong>Ups!</strong> Por favor, verifique la línea {{error+1}}</div>
 			<div data-ng-show="loading" class="alert"><i class="fa breath-right fa-refresh fa-spin"></i>Cargando datos. Por favor espere.</div>
 		</div>
@@ -53,7 +54,7 @@
 
 		<section class="" data-ng-show="!error && data.length">
 
-			<div class="container">
+			<div class="container" id="elija_grafico_div_id">
 
 				<div>
 
@@ -222,7 +223,7 @@
 
 <section class="" data-ng-show="!error && data.length">
 
-	<div class="container">
+	<div  id="seccion_visualizacion_id" class="container">
 
 		<h3 id="options">
 			Modifique la visualización
@@ -285,22 +286,25 @@
 
 </section>
 
-<section class="dark" data-ng-show="!error && data.length" style="padding-bottom:50px">
+<section id="seccion_exportar_id" class="dark" data-ng-show="!error && data.length" style="padding-bottom:50px">
 <!-- ng-show="model.isValid()" -->
 
 
 	<div class="container">
 
 		<div>
-
+btn btn-success form-control pull-left
 			<div id="export" class="row">
 
 				<div class="col-lg-3">
 					<h3><i class="fa fa-arrow-circle-o-down breath-right"></i>Descargar</h3>
 					<downloader></downloader>
 				</div>
-
-				<div class="col-lg-9">
+				<div class="col-lg-3" align="left">
+					<button id="exportar_button" onclick="botonExportar()" class="btn btn-success form-control pull-left">Exportar</button>
+				</div>
+				
+				<div class="col-lg-9" style="display:none;" id="div_parseo">
 					<h3 id="data"><i class="fa fa-code breath-right"></i>Código para exportar</h3>
 					<coder></coder>
 					<p class="light">Copie el código dentro de su HTML exportar la visualización.
