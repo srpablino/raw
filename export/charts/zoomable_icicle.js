@@ -73,6 +73,7 @@
 				.on("mouseover",function(d){tip.show(d);mouseover(d);})
 				.on("mouseout", function(d){tip.hide(d);mouseleave(d)})//tip.hide)
 				.on("click", click)
+		
 		texto=svg.selectAll("text").data(nodes)
 			.enter().append("svg:text")
 				.attr("x", function(d) { return x(d.x) + x(d.dx/2) ; })
@@ -81,10 +82,18 @@
 				.attr("text-anchor", "middle")
 				.style("font-size","11px")
 				.style("font-family","Arial, Helvetica")
-				.text(function(d) { var cadena= d.dx >= 0.25 ? d.name : "";return cadena});
+				.text(function(d) { var cadena=$.fn.textWidth(d.name,"11px")  <= d.dx*width ? d.name : "";return cadena});		
+		
 		
 				
 	});
+	
+	$.fn.textWidth = function(text, font) {
+		if (!$.fn.textWidth.fakeEl) $.fn.textWidth.fakeEl = $('<span>').hide().appendTo(document.body);
+			$.fn.textWidth.fakeEl.text(text || this.val() || this.text()).css('font', font || this.css('font'));
+		return $.fn.textWidth.fakeEl.width();
+	};
+	
 	function mouseover(d){
 		svg.selectAll("rect")
       .style("opacity", 0.2);
@@ -124,26 +133,18 @@
 		  .attr("y", function(d) { return y(d.y); })
 		  .attr("width", function(d) { var w=x(d.x + d.dx) - x(d.x); return w  })
 		  .attr("height", function(d) { var h=y(d.y + d.dy) - y(d.y); return h  });
-	//hace volar todo el texto, deja en blanco el grafico
-	texto.transition()
-				.attr("x", function(d) { 9000 ; })
-				.attr("y", function(d) { 9000 ; })
-				.attr("dy", ".35em")
-				.attr("text-anchor", "middle")
-				.style("font-size","11px")
-				.style("font-family","Arial, Helvetica")
-				.text(function(d) { return d.name });				  
-    //reinserta texto, pero solo aquellos que cumplan condicion de filtro				
-	var max = (d.dx)/4;	  
-	texto.data(nodes.filter(function(d){return d.dx >= max}))
-				.transition()
+		
+		texto.transition(750)
 				.attr("x", function(d) { return x(d.x + d.dx/2) ; })
 				.attr("y", function(d) { return y(d.y + d.dy/2) ; })
 				.attr("dy", ".35em")
 				.attr("text-anchor", "middle")
 				.style("font-size","11px")
 				.style("font-family","Arial, Helvetica")
-				.text(function(d) { return d.name });				  
+				.text(function(d) { var w=x(d.x + d.dx) - x(d.x); 
+									var cadena= $.fn.textWidth(d.name,"11px")  <= w ? d.name : "";
+									return cadena} );				  			
+
 	}
 	
 	

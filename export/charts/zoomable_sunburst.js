@@ -88,17 +88,7 @@
 				.on("mouseover",function(d){tip.show(d);mouseover(d);})
 				.on("mouseout", function(d){tip.hide(d);mouseleave(d)})
 				.on("click", click);
-		
-		texto=g.append("text")
-				.style("font-size",16)
-				.attr("x", function(d) { return 10 })
-				.attr("dy", function(d) { return 30   })
-				//.attr("dy", ".35em") // vertical-align
-				
-				texto.append("textPath")
-					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? d.name: ""; })
-				    
+			    
 			  
 	});
 	
@@ -144,28 +134,6 @@
 		
 		console.log("valor "+d.class.split(" --> ")[dp])
 		
-		
-		
-		/*texto.append("textPath")
-					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d,i) { return x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? d.name: ""; })
-		*/
-		
-		
-		
-		texto.style("opacity",function(d){return parent.parent ? 
-														(d.class.split(" --> ")[dp] == parent.name & x(d.dx)/(d.y+d.dy/2) >= Math.PI/2.5 ? 1 : 0)
-														: x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 ? 1 : 0 })
-		
-		/*
-		texto=g.append("text")
-				.style("font-size",16)
-				.attr("x", function(d) { return 10 })
-				.attr("dy", function(d) { return 30   })
-				.append("textPath")
-					.attr("xlink:href",function(d,i){return "#s"+i})
-				    .text(function(d) {return  x(d.dx)/(d.y+d.dy/2) >= Math.PI/3 &
-						d.class.split(" --> ")[dp] == parent.name ? d.name: "" })*/
       
 	}
 	
